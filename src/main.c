@@ -12,21 +12,14 @@
 #include "my_lib.h"
 #include "utils.h"
 #include "errors.h"
+#include "my_sudo.h"
 
-static const char flags_arr[] = {
-    'h',
-    'u',
-    'g',
-    'E',
-    's',
-};
-
-int main(int ac, char **av)
+int my_sudo(char **av, sudo_arguments_t *arguments)
 {
-    char *username = get_uid();
+    char *username = get_uid(arguments);
     char *user_password = get_hashed_password(username);
     int attempts = 1;
-    char **args = &av[1];
+    char **args = &av[arguments->start_index];
 
     while (check_password(username, user_password)
         != GOOD_PASSWORD && attempts < 3) {
@@ -36,9 +29,20 @@ int main(int ac, char **av)
     if (attempts == 3)
         return incorrect_password();
     if (check_user_permissions(username)) {
-        my_exec(args);
+        my_exec(arguments, args);
         return 0;
     }
     printf("%s is not in the sudoers file\n", username);
     return 84;
+}
+
+int main(int ac, char **av)
+{
+    sudo_arguments_t *args = parse_arguments(ac, av);
+
+    if (args->no_argument | !args)
+        return 84;
+    if (!args || ac < 2)
+        return display_help_message();
+    my_sudo(av, args);
 }
