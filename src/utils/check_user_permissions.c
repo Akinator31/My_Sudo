@@ -24,6 +24,21 @@ char *get_uid_string(void)
     sprintf(uid_to_str, "%d", uid);
     result = strcat(result, uid_to_str);
     result = strcat(result, ":");
+    free(uid_to_str);
+    return result;
+}
+
+char *get_gid_string(void)
+{
+    unsigned int gid = getgid();
+    int gid_length = snprintf(NULL, 0, "%d", gid);
+    char *result = calloc(gid_length + 3, sizeof(char));
+    char *gid_to_str = calloc(gid_length + 1, sizeof(char));
+
+    result = strcat(result, ":");
+    sprintf(gid_to_str, "%d", gid);
+    result = strcat(result, gid_to_str);
+    result = strcat(result, ":");
     return result;
 }
 
@@ -45,17 +60,16 @@ bool is_user_in_sudoers(char *username)
     return false;
 }
 
-char *is_usergroup_in_sudoers(char *username)
+char *is_usergroup_in_sudoers(char *groupname)
 {
-    FILE *group_file = fopen("/etc/group", "r");
-    const char *separator = ":";
+    FILE *group_file = fopen("/etc/sudoers", "r");
     char *line = NULL;
     size_t len = getline(&line, &len, group_file);
     char *result = NULL;
 
     while ((int)len != -1) {
-        if (strstr(line, username)) {
-            result = strdup(strtok(line, separator));
+        if (strstr(line, groupname)) {
+            result = strdup(strtok(line, ":"));
             free(line);
             fclose(group_file);
             return result;
@@ -67,11 +81,16 @@ char *is_usergroup_in_sudoers(char *username)
     return NULL;
 }
 
-bool check_user_permissions(char *username)
+bool check_user_permissions(char *username, char *groupname)
 {
-    if (is_user_in_sudoers(username))
+    if (is_user_in_sudoers(username)) {
+        if (groupname)
+            free(groupname);
         return true;
-    if (is_usergroup_in_sudoers(username))
+    }
+    if (is_usergroup_in_sudoers(groupname)) {
+        free(groupname);
         return true;
+    }
     return false;
 }

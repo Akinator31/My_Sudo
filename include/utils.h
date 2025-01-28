@@ -13,13 +13,17 @@
 enum ATTEMPTS_PASSWORD {
     GOOD_PASSWORD,
     TRY_AGAIN,
+    INCORRECT_USERNAME,
 };
 
-bool check_password(const char *username, const char *password_hash);
+bool check_password(const char *username,
+    const char *password_hash, int *attempt);
 char *get_hashed_password(char *username);
-bool check_user_permissions(char *username);
+bool check_user_permissions(char *username, char *groupname);
 char *get_uid(sudo_arguments_t *args);
+char *get_gid(sudo_arguments_t *args);
 char *get_uid_string(void);
+char *get_gid_string(void);
 void my_exec(sudo_arguments_t *sudo_params, char **args);
 sudo_arguments_t *parse_arguments(int ac, char **av);
 void destroy_sudo_args(sudo_arguments_t *args);

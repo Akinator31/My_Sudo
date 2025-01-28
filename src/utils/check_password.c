@@ -15,12 +15,17 @@
 #include <unistd.h>
 #include "utils.h"
 
-bool check_password(const char *username, const char *password_hash)
+bool check_password(const char *username,
+    const char *password_hash, int *attempt)
 {
     char *password = NULL;
     char *hash_result = NULL;
-    char prompt[500];
+    char prompt[strlen("[my_sudo] password for : ") + strlen(username) + 2];
 
+    if (!username) {
+        *attempt = INCORRECT_USERNAME;
+        return false;
+    }
     sprintf(prompt, "[my_sudo] password for %s: ", username);
     password = getpass(prompt);
     hash_result = crypt(password, password_hash);

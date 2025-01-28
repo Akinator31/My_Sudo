@@ -18,6 +18,8 @@ sudo_arguments_t *create_sudo_args_struct(void)
     args->execute_shell = false;
     args->preserve_env = false;
     args->no_argument = false;
+    args->specific_user = NULL;
+    args->specific_group = NULL;
     return args;
 }
 

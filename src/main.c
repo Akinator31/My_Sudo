@@ -17,23 +17,23 @@
 int my_sudo(char **av, sudo_arguments_t *arguments)
 {
     char *username = get_uid(arguments);
+    char *group = get_gid(arguments);
     char *user_password = get_hashed_password(username);
     int attempts = 1;
     char **args = &av[arguments->start_index];
 
-    while (check_password(username, user_password)
+    while (check_password(username, user_password, &attempts)
         != GOOD_PASSWORD && attempts < 3) {
         attempts++;
         printf("Sorry, try again\n");
     }
-    if (attempts == 3)
-        return incorrect_password();
-    if (check_user_permissions(username)) {
+    if (errors_manager(arguments, group, attempts) == 84)
+        return 84;
+    if (check_user_permissions(username, group)) {
         my_exec(arguments, args);
         return 0;
     }
-    printf("%s is not in the sudoers file\n", username);
-    return 84;
+    return user_not_in_sudoers(arguments, username, group);
 }
 
 int main(int ac, char **av)
@@ -44,5 +44,5 @@ int main(int ac, char **av)
         return 84;
     if (!args || ac < 2)
         return display_help_message();
-    my_sudo(av, args);
+    return my_sudo(av, args);
 }

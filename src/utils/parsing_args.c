@@ -18,7 +18,6 @@ static const char flags_arr[] = {
     'E',
     's',
     'h',
-    '-',
     '?',
 };
 
@@ -36,8 +35,6 @@ sudo_arguments_t *analyse_sudo_arguments(sudo_arguments_t *args,
     char **av, int index)
 {
     for (int i = 0; av[index][i] != '\0'; i++) {
-        if (!is_a_flag(av[index][i], args))
-            return args;
         if (help_flag(args, av[index][i]))
             return NULL;
         if (user_flag(args, av[index][i], av[index + 1]))

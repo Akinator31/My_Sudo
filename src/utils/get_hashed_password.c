@@ -8,24 +8,28 @@
 #define _GNU_SOURCE
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 char *get_hashed_password(char *username)
 {
     FILE *shadow_file = fopen("/etc/shadow", "r");
     char *line = NULL;
-    const char *separator = ":";
     char *str_token = NULL;
-    size_t len = 0;
+    size_t len = getline(&line, &len, shadow_file);
+    char *result = NULL;
 
-    if (!shadow_file)
+    if (!shadow_file | !username)
         return NULL;
-    while (getline(&line, &len, shadow_file) != -1) {
-        str_token = strtok(line, separator);
+    while ((int)len != -1) {
+        str_token = strtok(line, ":");
         if (strcmp(str_token, username) == 0) {
             fclose(shadow_file);
-            return strtok(NULL, separator);
+            result = strtok(NULL, ":");
+            return result;
         }
+        len = getline(&line, &len, shadow_file);
     }
+    free(line);
     fclose(shadow_file);
     return NULL;
 }

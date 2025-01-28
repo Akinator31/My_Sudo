@@ -30,7 +30,7 @@ bool user_flag(sudo_arguments_t *args, char character, char *argument)
 bool group_flag(sudo_arguments_t *args, char character, char *argument)
 {
     if (character == 'g') {
-        args->specific_user = my_strdup(argument);
+        args->specific_group = my_strdup(argument);
         args->start_index += 2;
         return true;
     }
