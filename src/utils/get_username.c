@@ -43,7 +43,6 @@ char *get_uid(sudo_arguments_t *args)
 
     while ((int)len != -1) {
         if (strstr(line, uid)) {
-            free(uid);
             return fetch_uid_user(passwd_file, args, line);
         }
         len = getline(&line, &len, passwd_file);
