@@ -20,7 +20,6 @@ int user_not_in_sudoers(sudo_arguments_t *args,
 
     sprintf(prompt, "%s is not in the sudoers file\n", username);
     write(2, prompt, strlen(prompt));
-    destroy_sudo_args(args);
     free(prompt);
     free(username);
     free(groupname);

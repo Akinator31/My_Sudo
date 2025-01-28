@@ -40,9 +40,7 @@ int main(int ac, char **av)
 {
     sudo_arguments_t *args = parse_arguments(ac, av);
 
-    if (args->no_argument | !args)
-        return 84;
     if (!args || ac < 2)
-        return display_help_message();
+        return display_help_message(args);
     return my_sudo(av, args);
 }

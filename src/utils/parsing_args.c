@@ -12,25 +12,6 @@
 #include "utils.h"
 #include "my_lib.h"
 
-static const char flags_arr[] = {
-    'u',
-    'g',
-    'E',
-    's',
-    'h',
-    '?',
-};
-
-bool is_a_flag(char flag, sudo_arguments_t *args)
-{
-    for (int i = 0; flags_arr[i] != '?'; i++) {
-        if (flags_arr[i] == flag)
-            return true;
-    }
-    args->no_argument = true;
-    return false;
-}
-
 sudo_arguments_t *analyse_sudo_arguments(sudo_arguments_t *args,
     char **av, int index)
 {
