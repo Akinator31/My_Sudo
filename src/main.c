@@ -33,14 +33,19 @@ int my_sudo(char **av, sudo_arguments_t *arguments)
         my_exec(arguments, args);
         return 0;
     }
-    return user_not_in_sudoers(arguments, username, group);
+    return user_not_in_sudoers(username, group);
 }
 
 int main(int ac, char **av)
 {
-    sudo_arguments_t *args = parse_arguments(ac, av);
+    sudo_arguments_t *args = NULL;
 
-    if (!args || ac < 2)
+    if (ac < 2)
+        return 84;
+    args = parse_arguments(ac, av);
+    if (!args)
+        return 84;
+    if (args->help)
         return display_help_message(args);
     return my_sudo(av, args);
 }

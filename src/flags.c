@@ -11,7 +11,7 @@
 bool help_flag(sudo_arguments_t *args, char character)
 {
     if (character == 'h') {
-        destroy_sudo_args(args);
+        args->help = 1;
         return true;
     }
     return false;

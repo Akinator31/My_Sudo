@@ -12,8 +12,7 @@
 #include "my_sudo.h"
 #include "utils.h"
 
-int user_not_in_sudoers(sudo_arguments_t *args,
-    char *username, char *groupname)
+int user_not_in_sudoers(char *username, char *groupname)
 {
     char *prompt = malloc(sizeof(char) * (strlen(" is not in the"
         "sudoers file\n") + strlen(username) + 2));

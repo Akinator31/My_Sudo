@@ -26,6 +26,7 @@ struct sudo_arguments_s {
     bool preserve_env;
     bool execute_shell;
     int start_index;
+    int help;
 };
 
 bool help_flag(sudo_arguments_t *args, char character);
