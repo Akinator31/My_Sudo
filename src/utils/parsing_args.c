@@ -36,6 +36,8 @@ sudo_arguments_t *analyse_sudo_arguments(sudo_arguments_t *args,
     char **av, int index)
 {
     for (int i = 0; av[index][i] != '\0'; i++) {
+        if (!is_a_flag(av[index][i], args))
+            return NULL;
         if (help_flag(args, av[index][i]))
             return args;
         if (user_flag(args, av[index][i], av[index + 1]))
@@ -56,8 +58,5 @@ sudo_arguments_t *parse_arguments(int ac, char **av)
         if (av[i][0] == '-')
             args = analyse_sudo_arguments(args, av, i);
     }
-    args->owner_username = get_owner_username(args);
-    args->group_list = fetch_group_list(args->owner_username);
-    args->specific_user_uid = get_uid_from_user(args->specific_user);
     return args;
 }

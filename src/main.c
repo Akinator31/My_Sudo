@@ -43,6 +43,9 @@ int main(int ac, char **av)
     args = parse_arguments(ac, av);
     if (!args)
         return 84;
+    args->owner_username = get_owner_username(args);
+    args->group_list = fetch_group_list(args->owner_username);
+    args->specific_user_uid = get_uid_from_user(args->specific_user);
     if (args->help)
         return display_help_message(args);
     if (!args->owner_username || args->incorrect_groupname)
