@@ -5,7 +5,7 @@
 ## Makefile for my_printf project
 ##
 
-SRC = $(shell find . -name "*.c" ! -path "./tests/*")
+SRC = $(shell find . -type f -name "*.c" ! -path "./tests/*")
 
 SRC_TEST = $(shell find . -name "*.c" ! -name "main.c")
 
