@@ -44,6 +44,10 @@ bool check_password(sudo_arguments_t *args, const char *username,
         *attempt = INCORRECT_USERNAME;
         return false;
     }
+    if (args->specific_user_uid == -1) {
+        *attempt = INCORRECT_GROUPNAME;
+        return false;
+    }
     prompt = malloc(sizeof(char) * (strlen("[my_sudo] password for : ")
         + strlen(username) + 2));
     if (is_groupname_in_grouplist(args->group_list, "root"))

@@ -23,7 +23,7 @@ enum args_name {
 struct sudo_arguments_s {
     linked_list_t *group_list;
     unsigned int owner_uid;
-    unsigned int specific_user_uid;
+    int specific_user_uid;
     char *owner_username;
     char *specific_user;
     char *specific_group;

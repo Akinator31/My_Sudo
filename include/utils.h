@@ -15,6 +15,8 @@ enum ATTEMPTS_PASSWORD {
     GOOD_PASSWORD,
     TRY_AGAIN,
     INCORRECT_USERNAME,
+    GOOD_NB_ATTEMPTS,
+    INCORRECT_GROUPNAME,
 };
 
 bool check_password(sudo_arguments_t *args, const char *username,
@@ -36,6 +38,6 @@ linked_list_t *fetch_group_list(char *username);
 bool is_groupname_in_grouplist(linked_list_t *group_list, char *groupname);
 bool is_grouplist_in_sudoers(linked_list_t *group_list);
 bool does_group_exist(char *groupname);
-unsigned int get_uid_from_user(char *username);
+int get_uid_from_user(char *username);
 
 #endif

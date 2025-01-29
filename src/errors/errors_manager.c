@@ -15,5 +15,7 @@ int errors_manager(sudo_arguments_t *args, int attempts)
         return incorrect_username(args);
     if (attempts == 3)
         return incorrect_password(args);
+    if (attempts == INCORRECT_GROUPNAME)
+        return incorrect_groupname(args);
     return 0;
 }

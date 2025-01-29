@@ -21,7 +21,7 @@ unsigned int fetch_uid_from_user(char *line)
     return result;
 }
 
-unsigned int get_uid_from_user(char *username)
+int get_uid_from_user(char *username)
 {
     FILE *passwd_file = fopen("/etc/passwd", "r");
     char *line = NULL;
@@ -40,5 +40,5 @@ unsigned int get_uid_from_user(char *username)
     }
     free(line);
     fclose(passwd_file);
-    return result;
+    return -1;
 }
