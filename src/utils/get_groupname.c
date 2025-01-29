@@ -19,7 +19,7 @@ char *select_groupname(sudo_arguments_t *args)
     if (args->specific_group)
         return args->specific_group;
     else
-        return get_uid_string();
+        return args->owner_username;
 }
 
 char *fetch_gid_user(FILE *group_file, sudo_arguments_t *args, char *line)
@@ -27,7 +27,6 @@ char *fetch_gid_user(FILE *group_file, sudo_arguments_t *args, char *line)
     char **string_element = my_str_to_word_array(line);
     char *group = strdup(string_element[0]);
 
-    args->uid = atoi(string_element[2]);
     free_2d_array_of_char(string_element);
     free(line);
     fclose(group_file);

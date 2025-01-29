@@ -9,10 +9,8 @@
 #include "utils.h"
 #include "errors.h"
 
-int errors_manager(sudo_arguments_t *args, char *group, int attempts)
+int errors_manager(sudo_arguments_t *args, int attempts)
 {
-    if (!group)
-        return incorrect_groupname(args);
     if (attempts == INCORRECT_USERNAME)
         return incorrect_username(args);
     if (attempts == 3)

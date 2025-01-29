@@ -5,6 +5,7 @@
 ** flags
 */
 
+#include <stdlib.h>
 #include "my_lib.h"
 #include "utils.h"
 
@@ -30,6 +31,10 @@ bool user_flag(sudo_arguments_t *args, char character, char *argument)
 bool group_flag(sudo_arguments_t *args, char character, char *argument)
 {
     if (character == 'g') {
+        if (!does_group_exist(argument)) {
+            args->incorrect_groupname = 1;
+            return true;
+        }
         args->specific_group = my_strdup(argument);
         args->start_index += 2;
         return true;

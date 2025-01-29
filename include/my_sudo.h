@@ -8,6 +8,7 @@
 #ifndef INCLUDED_MY_SUDO_H
     #define INCLUDED_MY_SUDO_H
     #include <stdbool.h>
+    #include "my_list.h"
 
 typedef struct sudo_arguments_s sudo_arguments_t;
 
@@ -20,13 +21,17 @@ enum args_name {
 };
 
 struct sudo_arguments_s {
-    unsigned long int uid;
+    linked_list_t *group_list;
+    unsigned int owner_uid;
+    unsigned int specific_user_uid;
+    char *owner_username;
     char *specific_user;
     char *specific_group;
     bool preserve_env;
     bool execute_shell;
     int start_index;
     int help;
+    int incorrect_groupname;
 };
 
 bool help_flag(sudo_arguments_t *args, char character);

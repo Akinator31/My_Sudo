@@ -15,9 +15,9 @@ OBJ = $(SRC:%.c=build/%.o)
 
 OBJ_TESTING = $(SRC:%.c=build-testing/%.o)
 
-CFLAGS += -fsanitize=address -g3 -Wextra -Wall -lcrypt $(INCLUDE)
+CFLAGS += -Wextra -Wall -lcrypt $(INCLUDE)
 
-TESTING_FLAGS = -g3 -ggdb -Wextra -Wall -lcrypt $(INCLUDE)
+TESTING_FLAGS = -fsanitize=address -g3 -ggdb -Wextra -Wall -lcrypt $(INCLUDE)
 
 NAME = my_sudo
 

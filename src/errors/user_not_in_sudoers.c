@@ -12,7 +12,7 @@
 #include "my_sudo.h"
 #include "utils.h"
 
-int user_not_in_sudoers(char *username, char *groupname)
+int user_not_in_sudoers(char *username)
 {
     char *prompt = malloc(sizeof(char) * (strlen(" is not in the"
         "sudoers file\n") + strlen(username) + 2));
@@ -21,6 +21,5 @@ int user_not_in_sudoers(char *username, char *groupname)
     write(2, prompt, strlen(prompt));
     free(prompt);
     free(username);
-    free(groupname);
     return 84;
 }

@@ -11,15 +11,18 @@
 
 sudo_arguments_t *create_sudo_args_struct(void)
 {
-    sudo_arguments_t *args = (sudo_arguments_t *)malloc(
+    sudo_arguments_t *args = malloc(
         sizeof(sudo_arguments_t));
 
+    args->group_list = NULL;
     args->start_index = 1;
     args->execute_shell = false;
     args->preserve_env = false;
     args->specific_user = NULL;
     args->specific_group = NULL;
     args->help = 0;
+    args->incorrect_groupname = 0;
+    args->owner_username = NULL;
     return args;
 }
 

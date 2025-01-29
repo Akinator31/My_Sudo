@@ -13,23 +13,41 @@
 #include <string.h>
 #include <unistd.h>
 #include <unistd.h>
+#include "my_sudo.h"
 #include "utils.h"
 
-bool check_password(const char *username,
-    const char *password_hash, int *attempt)
+int ask_password(char *prompt, const char *password_hash)
 {
     char *password = NULL;
     char *hash_result = NULL;
-    char prompt[strlen("[my_sudo] password for : ") + strlen(username) + 2];
+    size_t len = 0;
+
+    if (isatty(fileno(stdin)))
+        password = getpass(prompt);
+    else
+        getline(&password, &len, stdin);
+    hash_result = crypt(password, password_hash);
+    if ((hash_result != NULL) && strcmp(hash_result, password_hash) == 0) {
+        free(prompt);
+        return GOOD_PASSWORD;
+    }
+    free(prompt);
+    return TRY_AGAIN;
+}
+
+bool check_password(sudo_arguments_t *args, const char *username,
+    const char *password_hash, int *attempt)
+{
+    char *prompt;
 
     if (!username) {
         *attempt = INCORRECT_USERNAME;
         return false;
     }
-    sprintf(prompt, "[my_sudo] password for %s: ", username);
-    password = getpass(prompt);
-    hash_result = crypt(password, password_hash);
-    if ((hash_result != NULL) && strcmp(hash_result, password_hash) == 0)
+    prompt = malloc(sizeof(char) * (strlen("[my_sudo] password for : ")
+        + strlen(username) + 2));
+    if (is_groupname_in_grouplist(args->group_list, "root"))
         return GOOD_PASSWORD;
-    return TRY_AGAIN;
+    sprintf(prompt, "[my_sudo] password for %s: ", username);
+    return ask_password(prompt, password_hash);
 }

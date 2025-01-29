@@ -12,10 +12,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include "my_list.h"
+#include "utils.h"
 
-char *get_uid_string(void)
+char *get_uid_string(unsigned int uid)
 {
-    unsigned int uid = getuid();
     int uid_length = snprintf(NULL, 0, "%d", uid);
     char *result = calloc(uid_length + 3, sizeof(char));
     char *uid_to_str = calloc(uid_length + 1, sizeof(char));
@@ -81,16 +82,12 @@ char *is_usergroup_in_sudoers(char *groupname)
     return NULL;
 }
 
-bool check_user_permissions(char *username, char *groupname)
+bool check_user_permissions(char *username, linked_list_t *group_list)
 {
     if (is_user_in_sudoers(username)) {
-        if (groupname)
-            free(groupname);
         return true;
     }
-    if (is_usergroup_in_sudoers(groupname)) {
-        free(groupname);
+    if (is_grouplist_in_sudoers(group_list))
         return true;
-    }
     return false;
 }
