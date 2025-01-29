@@ -23,7 +23,7 @@ bool check_password(sudo_arguments_t *args, const char *username,
     const char *password_hash, int *attempt);
 char *get_hashed_password(char *username);
 bool check_user_permissions(char *username, linked_list_t *group_list);
-char *get_owner_username(sudo_arguments_t *args);
+char *get_owner_username(void);
 char *get_gid(sudo_arguments_t *args);
 char *get_uid_string(unsigned int uid);
 char *get_gid_string(void);

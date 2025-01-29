@@ -22,7 +22,7 @@ char *select_groupname(sudo_arguments_t *args)
         return args->owner_username;
 }
 
-char *fetch_gid_user(FILE *group_file, sudo_arguments_t *args, char *line)
+char *fetch_gid_user(FILE *group_file, char *line)
 {
     char **string_element = my_str_to_word_array(line);
     char *group = strdup(string_element[0]);
@@ -43,7 +43,7 @@ char *get_gid(sudo_arguments_t *args)
     while ((int)len != -1) {
         if (strstr(line, gid)) {
             free(gid);
-            return fetch_gid_user(group_file, args, line);
+            return fetch_gid_user(group_file, line);
         }
         len = getline(&line, &len, group_file);
     }

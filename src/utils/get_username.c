@@ -14,11 +14,10 @@
 #include "my_sudo.h"
 #include "my_lib.h"
 
-char *fetch_owner_user(FILE *passwd_file, sudo_arguments_t *args, char *line)
+char *fetch_owner_user(FILE *passwd_file, char *line)
 {
     char **string_element = my_str_to_word_array(line);
     char *user = strdup(string_element[0]);
-    char *temp = NULL;
 
     free_2d_array_of_char(string_element);
     free(line);
@@ -26,7 +25,7 @@ char *fetch_owner_user(FILE *passwd_file, sudo_arguments_t *args, char *line)
     return user;
 }
 
-char *get_owner_username(sudo_arguments_t *args)
+char *get_owner_username(void)
 {
     FILE *passwd_file = fopen("/etc/passwd", "r");
     char *uid = get_uid_string(getuid());
@@ -35,7 +34,7 @@ char *get_owner_username(sudo_arguments_t *args)
 
     while ((int)len != -1) {
         if (strstr(line, uid)) {
-            return fetch_owner_user(passwd_file, args, line);
+            return fetch_owner_user(passwd_file, line);
         }
         len = getline(&line, &len, passwd_file);
     }
