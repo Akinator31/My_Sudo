@@ -55,6 +55,11 @@ tests_run: $(OBJ_TEST)
 	gcc -o $(TESTING_NAME) $(OBJ_TEST) $(TEST_FLAGS)
 	./sudo_test
 
+show_tests: tests_run
+	mkdir -p coverage
+	gcovr -r . --html --html-details -o coverage/index.html
+	firefox coverage/index.html
+
 perm: all
 	$(shell sudo chown root:root my_sudo)
 	$(shell sudo chmod 4755 my_sudo)
@@ -73,5 +78,8 @@ fclean: clean
 	rm -f $(NAME)
 	rm -f $(DEBUG_NAME)
 	rm -f $(TESTING_NAME)
+	rm -rf coverage
+	$(shell find . -name "*.gcda" -delete)
+	$(shell find . -name "*.gcno" -delete)
 
 re: fclean all
