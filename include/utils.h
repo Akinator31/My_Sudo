@@ -14,9 +14,10 @@
 enum ATTEMPTS_PASSWORD {
     GOOD_PASSWORD,
     TRY_AGAIN,
-    INCORRECT_USERNAME,
+    CONTINUE,
     GOOD_NB_ATTEMPTS,
     INCORRECT_GROUPNAME,
+    INCORRECT_USERNAME,
 };
 
 bool check_password(sudo_arguments_t *args, const char *username,

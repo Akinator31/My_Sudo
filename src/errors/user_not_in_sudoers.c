@@ -17,7 +17,7 @@ int user_not_in_sudoers(char *username)
     char *prompt = malloc(sizeof(char) * (strlen(" is not in the"
         "sudoers file\n") + strlen(username) + 2));
 
-    sprintf(prompt, "%s is not in the sudoers file\n", username);
+    sprintf(prompt, "%s is not in the my_sudoers file.\n", username);
     write(2, prompt, strlen(prompt));
     free(prompt);
     free(username);
