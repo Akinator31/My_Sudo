@@ -10,6 +10,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static void free_all_here(char *line, FILE *file)
+{
+    free(line);
+    fclose(file);
+}
+
 char *get_hashed_password(char *username)
 {
     FILE *shadow_file = fopen("/etc/shadow", "r");
@@ -29,7 +35,6 @@ char *get_hashed_password(char *username)
         }
         len = getline(&line, &len, shadow_file);
     }
-    free(line);
-    fclose(shadow_file);
+    free_all_here(line, shadow_file);
     return NULL;
 }

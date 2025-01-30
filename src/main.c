@@ -25,9 +25,12 @@ int my_sudo(char **av, sudo_arguments_t *arguments)
         != GOOD_PASSWORD && attempts < 3) {
         attempts++;
         printf("Sorry, try again\n");
-    }
-    if (errors_manager(arguments, attempts) == 84)
+        }
+    if (errors_manager(arguments, attempts) == 84) {
+        free(arguments->owner_username);
+        clear_list_and_data(arguments->group_list, &free);
         return 84;
+    }
     if (check_user_permissions(arguments->owner_username,
         arguments->group_list))
         return my_exec(arguments, args);

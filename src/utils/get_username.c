@@ -34,11 +34,13 @@ char *get_owner_username(void)
 
     while ((int)len != -1) {
         if (strstr(line, uid)) {
+            free(uid);
             return fetch_owner_user(passwd_file, line);
         }
         len = getline(&line, &len, passwd_file);
     }
     free(line);
     fclose(passwd_file);
+    free(uid);
     return NULL;
 }

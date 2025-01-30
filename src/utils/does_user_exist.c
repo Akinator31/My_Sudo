@@ -17,6 +17,8 @@ bool does_user_exist(char *username)
     char *line = NULL;
     size_t len = 0;
 
+    if (!username)
+        return false;
     while (getline(&line, &len, passwd_file) != -1) {
         if (strstr(line, username)) {
             free(line);

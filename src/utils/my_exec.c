@@ -25,8 +25,16 @@ int my_exec(sudo_arguments_t *sudo_params, char **args)
         setuid(0);
     if (!sudo_params->specific_group)
         setgid(0);
-    if (!args[0])
+    if (!args[0]) {
+        free(sudo_params->specific_user);
+        free(sudo_params->owner_username);
+        clear_list_and_data(sudo_params->group_list, &free);
+        free(sudo_params);
         return 84;
+    }
+    free(sudo_params->owner_username);
+    clear_list_and_data(sudo_params->group_list, &free);
+    free(sudo_params);
     setgroups(0, NULL);
     return execvp(args[0], args);
 }

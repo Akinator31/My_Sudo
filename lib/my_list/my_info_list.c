@@ -14,7 +14,7 @@ linked_list_t *new_list(void)
 }
 
 linked_list_t *clear_list_and_data(linked_list_t *list,
-    int (*clear_func)(void *data))
+    void (*clear_func)(void *data))
 {
     linked_list_t *temp = list;
 

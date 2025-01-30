@@ -8,6 +8,7 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "my_lib.h"
 #include "my_sudo.h"
 #include "my_list.h"
@@ -21,6 +22,7 @@ void insert_group(linked_list_t **group_list, char *line, char *username)
         if (!strcmp(username, line_elements[i])) {
             *group_list = push_front_list(*group_list,
             strdup(line_elements[0]));
+            free_2d_array_of_char(line_elements);
             return;
         }
     }
@@ -38,5 +40,7 @@ linked_list_t *fetch_group_list(char *username)
         return NULL;
     while (getline(&line, &len, group_file) != -1)
         insert_group(&group_list, line, username);
+    free(line);
+    fclose(group_file);
     return group_list;
 }

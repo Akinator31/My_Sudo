@@ -17,6 +17,8 @@ bool does_group_exist(char *groupname)
     char *line = NULL;
     size_t len = 0;
 
+    if (!groupname)
+        return false;
     while (getline(&line, &len, group_file) != -1) {
         if (strstr(line, groupname)) {
             free(line);
