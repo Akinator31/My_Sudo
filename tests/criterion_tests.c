@@ -16,3 +16,17 @@ Test(incorrect_username, test_basic)
 
     cr_assert_eq(incorrect_groupname(args), 84);
 }
+
+Test(incorrect_groupname, test_basic)
+{
+    sudo_arguments_t *args = create_sudo_args_struct();
+
+    cr_assert_eq(incorrect_groupname(args), 84);
+}
+
+Test(incorrect_password, test_basic)
+{
+    sudo_arguments_t *args = create_sudo_args_struct();
+
+    cr_assert_eq(incorrect_password(args), 84);
+}
