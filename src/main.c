@@ -38,8 +38,6 @@ int main(int ac, char **av)
 {
     sudo_arguments_t *args = NULL;
 
-    if (ac < 2)
-        return 84;
     args = parse_arguments(ac, av);
     if (!args)
         return 84;
@@ -48,11 +46,14 @@ int main(int ac, char **av)
     args->specific_user_uid = get_uid_from_user(args->specific_user);
     if (args->help)
         return display_help_message(args);
-    if (!args->owner_username || args->incorrect_groupname)
+    if (!args->owner_username)
         return 84;
+    if (args->incorrect_groupname)
+        return incorrect_groupname(args);
+    if (args->incorrect_username)
+        return incorrect_username(args);
     if (is_groupname_in_grouplist(args->group_list, args->specific_group)
         || is_grouplist_in_sudoers(args->group_list))
         return my_sudo(av, args);
-    else
-        return 84;
+    return 84;
 }

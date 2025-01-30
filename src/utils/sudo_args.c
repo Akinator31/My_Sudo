@@ -20,9 +20,10 @@ sudo_arguments_t *create_sudo_args_struct(void)
     args->preserve_env = false;
     args->specific_user = NULL;
     args->specific_group = NULL;
-    args->help = 0;
-    args->incorrect_groupname = 0;
     args->owner_username = NULL;
+    args->incorrect_groupname = 0;
+    args->incorrect_username = 0;
+    args->help = 0;
     return args;
 }
 

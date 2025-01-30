@@ -32,6 +32,7 @@ struct sudo_arguments_s {
     int start_index;
     int help;
     int incorrect_groupname;
+    int incorrect_username;
 };
 
 bool help_flag(sudo_arguments_t *args, char character);

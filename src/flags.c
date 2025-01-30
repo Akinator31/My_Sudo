@@ -21,6 +21,10 @@ bool help_flag(sudo_arguments_t *args, char character)
 bool user_flag(sudo_arguments_t *args, char character, char *argument)
 {
     if (character == 'u') {
+        if (!does_user_exist(argument)) {
+            args->incorrect_username = 1;
+            return true;
+        }
         args->specific_user = my_strdup(argument);
         args->start_index += 2;
         return true;
