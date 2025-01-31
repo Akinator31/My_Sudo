@@ -13,5 +13,6 @@ int incorrect_password(sudo_arguments_t *args);
 int user_not_in_sudoers(char *username);
 int incorrect_groupname(sudo_arguments_t *args);
 int errors_manager(sudo_arguments_t *args, int attempts);
+int is_no_arg_error(int ac);
 
 #endif
