@@ -135,3 +135,37 @@ Test(parse_args_test, test_basic)
 
     cr_assert_eq(parse_arguments(0, word_array), NULL);
 }
+
+Test(error_manage_test, test_basic)
+{
+    sudo_arguments_t *args = create_sudo_args_struct();
+
+    cr_assert_eq(errors_manager(args, 0), 0);
+}
+
+Test(new_list_test, test_basic)
+{
+    cr_assert_null(new_list());
+}
+
+Test(help_flag_test, test_basic)
+{
+    sudo_arguments_t *args = create_sudo_args_struct();
+
+    cr_assert_eq(help_flag(args, 'h'), true);
+}
+
+Test(group_flag_test, test_basic)
+{
+    sudo_arguments_t *args = create_sudo_args_struct();
+
+    cr_assert_eq(group_flag(args, 'g', "test"), true);
+}
+
+Test(check_passwd_test, test_basic)
+{
+    sudo_arguments_t *args = create_sudo_args_struct();
+    int a = 0;
+
+    cr_assert_eq(check_password(args, NULL, NULL, &a), false);
+}
