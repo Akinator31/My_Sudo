@@ -11,7 +11,7 @@
 
 int incorrect_password(sudo_arguments_t *args)
 {
-    write(2, "Incorrect password !\n", 22);
+    write(2, "[my_sudo] 3 incorrect password attempts\n", 41);
     destroy_sudo_args(args);
     return 84;
 }
