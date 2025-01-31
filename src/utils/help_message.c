@@ -9,11 +9,11 @@
 #include "my_sudo.h"
 #include "utils.h"
 
-int display_help_message(sudo_arguments_t *args)
+int display_help_message(sudo_arguments_t *args, int error_code)
 {
     if (args)
         destroy_sudo_args(args);
     printf("usage: ./my_sudo -h\n");
     printf("usage: ./my_sudo [-ugEs] [command [args ...]]\n");
-    return 0;
+    return error_code;
 }

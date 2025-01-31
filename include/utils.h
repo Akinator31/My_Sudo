@@ -31,7 +31,7 @@ char *get_gid_string(void);
 int my_exec(sudo_arguments_t *sudo_params, char **args);
 sudo_arguments_t *parse_arguments(int ac, char **av);
 void destroy_sudo_args(sudo_arguments_t *args);
-int display_help_message(sudo_arguments_t *args);
+int display_help_message(sudo_arguments_t *args, int error_code);
 sudo_arguments_t *create_sudo_args_struct(void);
 void print_sudo_args(sudo_arguments_t *args);
 void free_2d_array_of_char(char **arr);

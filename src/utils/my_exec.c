@@ -12,6 +12,7 @@
 #include <grp.h>
 #include "my_sudo.h"
 #include "utils.h"
+#include "errors.h"
 
 extern char **environ;
 
@@ -26,7 +27,7 @@ int my_exec(sudo_arguments_t *sudo_params, char **args)
     if (!sudo_params->specific_group)
         setgid(0);
     if (!args[0])
-        return 84;
+        return display_help_message(sudo_params, 84);
     setgroups(0, NULL);
     return execvp(args[0], args);
 }
