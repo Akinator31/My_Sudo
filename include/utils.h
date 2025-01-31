@@ -41,5 +41,6 @@ bool is_grouplist_in_sudoers(linked_list_t *group_list);
 bool does_group_exist(char *groupname);
 int get_uid_from_user(char *username);
 bool does_user_exist(char *username);
+unsigned int fetch_uid_from_user(char *line);
 
 #endif

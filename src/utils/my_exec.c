@@ -20,12 +20,18 @@ int my_exec(sudo_arguments_t *sudo_params, char **args)
 {
     if (!sudo_params->preserve_env)
         environ = NULL;
-    if (sudo_params->specific_user)
+    if (sudo_params->specific_user) {
         setuid(sudo_params->specific_user_uid);
-    if (!sudo_params->specific_user)
+        seteuid(sudo_params->specific_user_uid);
+    }
+    if (!sudo_params->specific_user) {
         setuid(0);
-    if (!sudo_params->specific_group)
+        seteuid(0);
+    }
+    if (!sudo_params->specific_group) {
         setgid(0);
+        setegid(0);
+    }
     if (!args[0])
         return display_help_message(sudo_params, 84);
     setgroups(0, NULL);
